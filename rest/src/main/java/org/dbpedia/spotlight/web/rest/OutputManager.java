@@ -67,7 +67,7 @@ public class OutputManager {
     }
 
     private String getText(String t, List<DBpediaResourceOccurrence> occList) {  //WTF?
-        if(occList == null || occList.isEmpty()) {
+        if(occList == null || occList.isEmpty() || occList.get(0) == null || occList.get(0).context() == null || occList.get(0).context().text() == null) {
             return t.replaceAll("\\[\\[(.*?)\\]\\]", "$1");
         }
         else {
@@ -258,6 +258,7 @@ public class OutputManager {
         String modifiedText = text;
         String startText;
         for (DBpediaResourceOccurrence occ : occList){
+            if(occ == null) continue;
             int endOfSurfaceform = occ.textOffset() + lengthAdded + occ.surfaceForm().name().length();
             startText = modifiedText.substring(0, occ.textOffset() + lengthAdded);
             String fullUri = Server.getPrefixedDBpediaURL(occ.resource());

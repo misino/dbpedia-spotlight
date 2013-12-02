@@ -148,7 +148,7 @@ object ExtractCandidateMap
 
         SpotlightLog.info(this.getClass, "  collecting redirects transitive closure...")
         for (redirectUri <- linkMap.keys) {
-            val endUri = getEndOfChainUri(linkMap, redirectUri)
+            val endUri = getEndOfChainUri(linkMap, redirectUri, 0)
             if (conceptURIs contains endUri) {
                 redURIstream.println(redirectUri+"\t"+endUri)
             }
@@ -160,13 +160,16 @@ object ExtractCandidateMap
 //        IndexConfiguration.set("preferredURIs", redirectTCFileName)
     }
 
-    private def getEndOfChainUri(m : Map[String,String], k : String) : String = {
-        // get end of chain but check for redirects to itself
-        m.get(k) match {
-            case Some(s : String) => if (s equals k) k else getEndOfChainUri(m, s)
-            case None => k
-        }
+private def getEndOfChainUri(m : Map[String,String], k : String, c: Int) : String = {
+    if(c==1000) {
+      return k;
     }
+    // get end of chain but check for redirects to itself
+    m.get(k) match {
+        case Some(s : String) => if (s equals k) k else getEndOfChainUri(m, s, c+1)
+        case None => k
+    }
+}
 
 
     def isGoodSurfaceForm(surfaceForm : String, stopWords : Set[String]) : Boolean = {

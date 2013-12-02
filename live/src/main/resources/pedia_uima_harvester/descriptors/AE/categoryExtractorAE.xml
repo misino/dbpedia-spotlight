@@ -35,7 +35,7 @@ Parameters:
         <value>
           <array>
             <string>en:Category</string>
-            <string>hu:Kategória</string>
+              <string>sk:Kategória</string>
           </array>
         </value>
       </nameValuePair>

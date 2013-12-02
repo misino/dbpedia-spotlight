@@ -129,7 +129,7 @@ class OccsFilter(confidence: Double, support: Int,
 
     Collections.sort(result, new Comparator[DBpediaResourceOccurrence] {
       def compare(o1: DBpediaResourceOccurrence, o2: DBpediaResourceOccurrence): Int = {
-        if (o1.textOffset > o2.textOffset)
+        if (o1 !=null && o2 !=null && o1.textOffset > o2.textOffset)
           return  1
         -1
       }
